@@ -1,0 +1,42 @@
+<div class="row mt-3">
+  <div class="col-md-12">
+    <img [src]="recipe?.imagePath" class="img-fluid" alt="" />
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="text-primary">{{ recipe?.name }}</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="btn-group">
+      <button
+        type="button"
+        data-bs-toggle="dropdown"
+        class="btn btn-primary dropdown-toggle"
+      >
+        Manage Recipe <span class="carat"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#" class="dropdown-item">To Shopping List</a></li>
+        <li><a href="#" class="dropdown-item">Edit Recipe</a></li>
+        <li><a href="#" class="dropdown-item">Delete Recipe</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h3>{{ recipe?.description }}</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h3>Ingredients</h3>
+  </div>
+</div>
