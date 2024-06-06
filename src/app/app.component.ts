@@ -14,5 +14,4 @@ export class AppComponent {
     this.loadedFeature = feature;
   }
 
-  
 }
