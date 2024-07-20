@@ -1,6 +1,11 @@
 <div class="row mt-3">
   <div class="col-md-12">
-    <img [src]="recipe?.imagePath" class="img-fluid" alt="recipe-img" />
+    <img
+      *ngIf="recipe?.imagePath"
+      [src]="recipe?.imagePath"
+      class="img-fluid"
+      alt="recipe-img"
+    />
   </div>
 </div>
 
@@ -21,8 +26,14 @@
         Manage Recipe <span class="carat"></span>
       </button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" (click)="addToShoppingList()">To Shopping List</a></li>
-        <li><a class="dropdown-item" (click)="onEditRoute()">Edit Recipe</a></li>
+        <li>
+          <a class="dropdown-item" (click)="addToShoppingList()"
+            >To Shopping List</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onEditRoute()">Edit Recipe</a>
+        </li>
         <li><a class="dropdown-item">Delete Recipe</a></li>
       </ul>
     </div>

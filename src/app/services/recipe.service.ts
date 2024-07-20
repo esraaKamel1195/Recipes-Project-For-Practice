@@ -8,53 +8,29 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class RecipeService {
-  recipes: Recipe[] = [
-    new Recipe(
-      'Test recipe 1',
-      'This is test 1 description for recipe',
-      '/assets/images/recipe.jpg',
-      [
-        new Ingredients('ing1', 100),
-        new Ingredients('ing2', 160),
-      ]
-    ),
-    new Recipe(
-      'Test recipe 2',
-      'This is test 2 description for recipe',
-      '/assets/images/recipe.jpg',
-      [
-        new Ingredients('ing4', 100),
-        new Ingredients('ing5', 160),
-      ]
-    ),
-    new Recipe(
-      'Test recipe 3',
-      'This is test 3 description for recipe',
-      '/assets/images/recipe.jpg',
-      [
-        new Ingredients('ing7', 100),
-        new Ingredients('ing8', 160),
-      ]
-    ),
-  ];
+  recipes: Recipe[] = [];
 
   recipeSelected = new Subject<Recipe>();
+  recipesChanged = new Subject<Recipe[]>();
 
-  constructor(
-    private shoppingListService: ShoppingListService
-  ) {}
+  constructor(private shoppingListService: ShoppingListService) {}
 
   getRecipes() {
     return this.recipes;
   }
 
   addIngredientToShoppingList(ingredient: Ingredients[] | undefined) {
-    if(ingredient) {
+    if (ingredient) {
       this.shoppingListService.addIngredients(ingredient);
     }
   }
 
   getRecipeById(id: number): Recipe {
     return this.recipes[id];
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes);
   }
 }

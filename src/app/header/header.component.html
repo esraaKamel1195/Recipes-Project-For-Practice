@@ -20,15 +20,29 @@
             aria-current="page"
             routerLink="/recipes"
             routerLinkActive="active"
+            *ngIf="isAuthenicated"
             >Recipes</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" routerLink="/shopping-list"
+          <a
+            class="nav-link text-light"
+            aria-current="page"
+            routerLink="/auth"
+            routerLinkActive="active"
+            *ngIf="!isAuthenicated"
+            >Authenticate</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-light"
+            routerLink="/shopping-list"
+            *ngIf="isAuthenicated"
             >Shopping List</a
           >
         </li>
-        <li class="nav-item text-light dropdown">
+        <li class="nav-item text-light dropdown" *ngIf="isAuthenicated">
           <a
             class="nav-link text-light dropdown-toggle"
             href="#"
@@ -39,9 +53,17 @@
             Manage
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Save Data</a></li>
-            <li><a class="dropdown-item" href="#">Fetch Data</a></li>
+            <li>
+              <a class="dropdown-item" (click)="onSaveData()">Save Data</a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="onFetchData()">Fetch Data</a>
+            </li>
           </ul>
+        </li>
+
+        <li class="nav-item float-end">
+          <a class="nav-link text-light" *ngIf="isAuthenicated" (click)="onLogout()">Logout</a>
         </li>
       </ul>
     </div>

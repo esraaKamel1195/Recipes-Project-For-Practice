@@ -1,9 +1,12 @@
-<div class="row"
-  [routerLink]="[index]"
->
+<div class="row" [routerLink]="[index]">
   <div class="mb-4">
     <div class="card">
-      <img [src]="recipe?.imagePath" alt="card-image" class="card-img-top" />
+      <img
+        *ngIf="recipe?.imagePath"
+        [src]="recipe?.imagePath"
+        alt="card-image"
+        class="card-img-top"
+      />
       <div class="card-body">
         <h5 class="card-title text-primary">
           {{ recipe?.name }}
