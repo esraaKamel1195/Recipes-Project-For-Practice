@@ -14,7 +14,7 @@ import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-it
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { AuthComponent } from './auth/auth.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderSpinnerComponent } from './loader-spinner/loader-spinner.component';
 import { AuthenticationInterceptorService } from './services/authentication.interceptor.service';
 import { StoreModule } from '@ngrx/store';
@@ -39,15 +39,9 @@ import { StoreModule } from '@ngrx/store';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     StoreModule.forRoot({}, {}),
   ],
-  // providers: [
-  //   {
-  //     provide:HTTP_INTERCEPTORS,
-  //     useClass:AuthenticationInterceptorService,
-  //     multi:true
-  //   }
-  // ],
   // providers: [{
   //   provide: HTTP_INTERCEPTORS,
   //   useClass: AuthenticationInterceptorService,

@@ -29,16 +29,8 @@ export class AuthComponent {
       return;
     }
 
-    // const email = form.value.email;
-    // const password = form.value.password;
     let authObs: Observable<IAuthResponseData>;
     this.isLoading = true;
-
-    // if (this.isLoggedInMode) {
-    //   authObs = this.authenticationsService.login(email, password);
-    // } else {
-    //   authObs = this.authenticationsService.signUp(email, password);
-    // }
 
     if (this.isLoggedInMode) {
       authObs = this.authenticationsService.login(form.value.email, form.value.password);
