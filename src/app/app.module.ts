@@ -17,6 +17,7 @@ import { AuthComponent } from './auth/auth.component';
 import { FormsModule } from '@angular/forms';
 import { LoaderSpinnerComponent } from './loader-spinner/loader-spinner.component';
 import { AuthenticationInterceptorService } from './services/authentication.interceptor.service';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -38,12 +39,21 @@ import { AuthenticationInterceptorService } from './services/authentication.inte
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    StoreModule.forRoot({}, {}),
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthenticationInterceptorService,
-    multi: true
-  }],
+  // providers: [
+  //   {
+  //     provide:HTTP_INTERCEPTORS,
+  //     useClass:AuthenticationInterceptorService,
+  //     multi:true
+  //   }
+  // ],
+  // providers: [{
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: AuthenticationInterceptorService,
+  //   multi: true
+  // }],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
