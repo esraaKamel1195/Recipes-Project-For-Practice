@@ -12,7 +12,7 @@ import { User } from '../user.model';
 export class DatastorageService {
   user = new BehaviorSubject<User>({
     _token: '',
-    _tokenExpirationData: new Date(),
+    _tokenExpirationDate: new Date(),
     id: '',
     email: '',
     token: '',

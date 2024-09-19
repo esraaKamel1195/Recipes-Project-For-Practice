@@ -24,16 +24,35 @@ export class AuthenticationInterceptorService implements HttpInterceptor {
       exhaustMap((user) => {
         if (!user || !user.token) {
           return next.handle(req);
-        } else {
-          const modifiedData = req.clone({
-            params: new HttpParams().set(
-              'auth',
-              user.token != null ? user.token : ''
-            ),
-          });
-          return next.handle(modifiedData);
         }
+        const modifiedRequest = req.clone({
+          params: new HttpParams().set('auth', user.token),
+        });
+        console.log(modifiedRequest);
+        return next.handle(modifiedRequest);
       })
     );
   }
+
+  // intercept(
+  //   req: HttpRequest<any>,
+  //   next: HttpHandler
+  // ): Observable<HttpEvent<any>> {
+  //   return this.authenticationsService.user.pipe(
+  //     take(1),
+  //     exhaustMap((user) => {
+  //       if (!user || !user.token) {
+  //         return next.handle(req);
+  //       }
+  //       const modifiedRequest = req.clone({
+  //         params: new HttpParams().set(
+  //           'auth',
+  //           user.token
+  //         ),
+  //       });
+  //       console.log(modifiedRequest);
+  //       return next.handle(modifiedRequest);
+  //     })
+  //   );
+  // }
 }

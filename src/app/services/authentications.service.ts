@@ -7,16 +7,12 @@ import { User } from '../user.model';
 @Injectable({
   providedIn: 'root',
 })
-
 export class AuthenticationsService {
-
   constructor(private httpClient: HttpClient) {}
 
   user = new Subject<User>();
 
   signUp(email: string, password: string) {
-    console.log("signUp", email, password);
-
     return this.httpClient
       .post<IAuthResponseData>(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDh60_7CNb6aZSxc6Ss9smYtYtQ0lDztXo',
@@ -25,9 +21,7 @@ export class AuthenticationsService {
       .pipe(
         catchError(this.handleError),
         tap((responseData) => {
-
           console.log('signUp', responseData);
-
           this.handleAuthentication(
             responseData.email,
             responseData.localId,
@@ -39,8 +33,6 @@ export class AuthenticationsService {
   }
 
   login(email: string, password: string) {
-    console.log("login", email, password);
-
     return this.httpClient
       .post<IAuthResponseData>(
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDh60_7CNb6aZSxc6Ss9smYtYtQ0lDztXo',
@@ -52,7 +44,7 @@ export class AuthenticationsService {
       )
       .pipe(
         catchError(this.handleError),
-        tap(responseData => {
+        tap((responseData) => {
           console.log('login', responseData);
           this.handleAuthentication(
             responseData.email,
@@ -67,7 +59,7 @@ export class AuthenticationsService {
   logout() {
     this.user.next({
       _token: '',
-      _tokenExpirationData: new Date(),
+      _tokenExpirationDate: new Date(),
       email: '',
       id: '',
       token: '',
@@ -76,32 +68,20 @@ export class AuthenticationsService {
 
   private handleError(errorResponse: HttpErrorResponse) {
     let errorMessage = 'Unknown error';
-    console.log( "handleError" );
-
+    console.log('errorResponse', errorResponse);
     if (!errorResponse.error || !errorResponse.error.error) {
       return throwError(() => errorMessage);
     }
-
     switch (errorResponse.error.error.message) {
       case 'EMAIL_EXISTS':
-        errorMessage = 'An error email exist';
+        errorMessage = 'An email already exists';
         break;
       case 'EMAIL_NOT_FOUND':
-        errorMessage = 'EMAIL NOT FOUND';
-        break;
-      case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-        errorMessage = 'TOO MANY ATTEMPTS TRY LATER';
+        errorMessage = 'Email not found !';
         break;
       case 'INVALID_PASSWORD':
-        errorMessage = 'INVALID PASSWORD';
-        break;
-      case 'USER_DISABLED':
-        errorMessage = 'USER DISABLED';
-        break;
-      default:
-        errorMessage = errorResponse.error.error.message;
+        errorMessage = 'Invalid password !';
     }
-
     return throwError(() => errorMessage);
   }
 
@@ -111,12 +91,54 @@ export class AuthenticationsService {
     token: string,
     expiresIn: number
   ) {
-    console.log("handleAuthentication");
-
     const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
-
     const user = new User(email, userId, token, expirationDate);
-
     this.user.next(user);
   }
+
+  // private handleError(errorResponse: HttpErrorResponse) {
+  //   let errorMessage = 'Unknown error';
+  //   console.log( "handleError" );
+
+  //   if (!errorResponse.error || !errorResponse.error.error) {
+  //     return throwError(() => errorMessage);
+  //   }
+
+  //   switch (errorResponse.error.error.message) {
+  //     case 'EMAIL_EXISTS':
+  //       errorMessage = 'An error email exist';
+  //       break;
+  //     case 'EMAIL_NOT_FOUND':
+  //       errorMessage = 'EMAIL NOT FOUND';
+  //       break;
+  //     case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+  //       errorMessage = 'TOO MANY ATTEMPTS TRY LATER';
+  //       break;
+  //     case 'INVALID_PASSWORD':
+  //       errorMessage = 'INVALID PASSWORD';
+  //       break;
+  //     case 'USER_DISABLED':
+  //       errorMessage = 'USER DISABLED';
+  //       break;
+  //     default:
+  //       errorMessage = errorResponse.error.error.message;
+  //   }
+
+  //   return throwError(() => errorMessage);
+  // }
+
+  // private handleAuthentication(
+  //   email: string,
+  //   userId: string,
+  //   token: string,
+  //   expiresIn: number
+  // ) {
+  //   console.log("handleAuthentication");
+
+  //   const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
+
+  //   const user = new User(email, userId, token, expirationDate);
+
+  //   this.user.next(user);
+  // }
 }
