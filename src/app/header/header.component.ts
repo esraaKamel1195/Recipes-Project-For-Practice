@@ -1,9 +1,7 @@
 import {
   Component,
-  EventEmitter,
   OnDestroy,
   OnInit,
-  Output,
 } from '@angular/core';
 import { DatastorageService } from '../services/datastorage.service';
 import { AuthenticationsService } from '../services/authentications.service';
@@ -17,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenicated: boolean = false;
-  private userSubscription!: Subscription;
+  private userSubscription: Subscription = new Subscription();
 
   constructor(
     private router: Router,
@@ -28,7 +26,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userSubscription = this.authenticationService.user.subscribe({
       next: (user) => {
-        console.log("from header", user);
         this.isAuthenicated = !user ? false : true;
       },
     });
