@@ -13,11 +13,14 @@ import { ShoppingListService } from '../services/shopping-list.service';
 export class ShoppingListComponent implements OnInit {
   ingredients: Ingredients [] = [];
 
-  constructor(private shoppingList: ShoppingListService) {
+  constructor(private shoppingListService: ShoppingListService) {
   }
 
   ngOnInit(): void {
-    this.ingredients = this.shoppingList.getIngredients();
+    this.ingredients = this.shoppingListService.getIngredients();
   }
 
+  onEditItem(index: number) {
+    this.shoppingListService.startedEditing.next(index);
+  }
 }
