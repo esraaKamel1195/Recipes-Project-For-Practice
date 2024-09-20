@@ -1,6 +1,6 @@
-<div class="row" [routerLink]="[index]">
-  <div class="mb-4">
-    <div class="card">
+<div class="row" [routerLink]="[index]" routerLinkActive="recipeActive">
+  <div class="col-md-6 mb-4">
+    <div class="card" style="width:250px">
       <img
         *ngIf="recipe?.imagePath"
         [src]="recipe?.imagePath"
