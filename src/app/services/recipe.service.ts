@@ -12,7 +12,9 @@ export class RecipeService {
   recipeSelected = new Subject<Recipe>();
   recipesChanged = new Subject<Recipe[]>();
 
-  constructor(private shoppingListService: ShoppingListService) {}
+  constructor(
+    private shoppingListService: ShoppingListService,
+  ) {}
 
   getRecipes() {
     return this.recipes;
@@ -34,14 +36,17 @@ export class RecipeService {
   }
 
   addRecipe(recipeFormValue: any) {
-
+    this.recipes.push(recipeFormValue);
+    this.recipesChanged.next(this.recipes);
   }
 
-  updateRecipe(id: number, recipeFormValue: any){
-
+  updateRecipe(id: number, recipeFormValue: Recipe) {
+    (this.recipes[id] = recipeFormValue),
+      this.recipesChanged.next(this.recipes);
   }
 
   deleteRecipe(id: number = 0) {
-
+    this.recipes.splice(id);
+    this.recipesChanged.next(this.recipes);
   }
 }
