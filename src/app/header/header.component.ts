@@ -3,7 +3,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { DatastorageService } from '../services/datastorage.service';
+import { DataStorageService } from '../services/datastorage.service';
 import { AuthenticationsService } from '../services/authentications.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private dataStoreService: DatastorageService,
+    private dataStoreService: DataStorageService,
     private authenticationService: AuthenticationsService
   ) {}
 

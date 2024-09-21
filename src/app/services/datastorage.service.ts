@@ -9,7 +9,7 @@ import { User } from '../user.model';
 @Injectable({
   providedIn: 'root',
 })
-export class DatastorageService {
+export class DataStorageService {
   user = new BehaviorSubject<User>({
     _token: '',
     _tokenExpirationDate: new Date(),
@@ -26,8 +26,6 @@ export class DatastorageService {
 
   storeRecipe() {
     const recipes = this.recipeService.getRecipes();
-    console.log('All recipes', recipes);
-
     this.httpClient
       .post(
         'https://http-recipes-project-default-rtdb.firebaseio.com/recipes.json',
@@ -35,7 +33,7 @@ export class DatastorageService {
       )
       .subscribe({
         next: (response) => {
-          console.log(response);
+          console.log('response', response);
         },
         error: (error) => {
           console.log(error);
@@ -50,7 +48,9 @@ export class DatastorageService {
         exhaustMap((user) => {
           return this.httpClient
             .get<{ [key: string]: Recipe[] }>(
-              'https://http-recipes-project-default-rtdb.firebaseio.com/recipes.json'
+              'https://http-recipes-project-default-rtdb.firebaseio.com/recipes.json', {
+                params: new HttpParams().set("auth", user?.token != null? user.token: "")
+              }
             )
             .pipe(
               map((recipeData: { [key: string]: Recipe[] }) => {
@@ -67,7 +67,6 @@ export class DatastorageService {
       )
       .subscribe({
         next: (data: Recipe[]) => {
-          console.log(data);
           this.recipeService.setRecipes(data);
         },
         error: (error) => {
