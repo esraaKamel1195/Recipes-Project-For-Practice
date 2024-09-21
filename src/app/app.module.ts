@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +15,6 @@ import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-it
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { AuthComponent } from './auth/auth.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderSpinnerComponent } from './loader-spinner/loader-spinner.component';
 import { AuthenticationInterceptorService } from './services/authentication.interceptor.service';
 import { StoreModule } from '@ngrx/store';
@@ -42,12 +42,11 @@ import { StoreModule } from '@ngrx/store';
     ReactiveFormsModule,
     StoreModule.forRoot({}, {}),
   ],
-  // providers: [{
-  //   provide: HTTP_INTERCEPTORS,
-  //   useClass: AuthenticationInterceptorService,
-  //   multi: true
-  // }],
-
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthenticationInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
