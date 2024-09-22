@@ -5,7 +5,6 @@ import { Recipe } from '../recipes/recipe.model';
 import { BehaviorSubject, exhaustMap, map, take } from 'rxjs';
 import { AuthenticationsService } from './authentications.service';
 import { User } from '../user.model';
-
 @Injectable({
   providedIn: 'root',
 })

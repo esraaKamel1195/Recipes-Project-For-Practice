@@ -55,13 +55,7 @@ export class AuthenticationsService {
   }
 
   logout() {
-    this.user.next({
-      _token: '',
-      _tokenExpirationDate: new Date(),
-      email: '',
-      id: '',
-      token: '',
-    });
+    this.user.next(null);
   }
 
   private handleError(errorResponse: HttpErrorResponse) {
