@@ -18,6 +18,8 @@ import { AuthComponent } from './auth/auth.component';
 import { LoaderSpinnerComponent } from './loader-spinner/loader-spinner.component';
 import { AuthenticationInterceptorService } from './services/authentication.interceptor.service';
 import { StoreModule } from '@ngrx/store';
+import { AlertComponent } from './alert/alert.component';
+import { PlaceholderDirective } from './directive/placeholder.directive';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { StoreModule } from '@ngrx/store';
     RecipeStartComponent,
     RecipeEditComponent,
     AuthComponent,
-    LoaderSpinnerComponent
+    LoaderSpinnerComponent,
+    AlertComponent,
+    PlaceholderDirective,
   ],
   imports: [
     BrowserModule,

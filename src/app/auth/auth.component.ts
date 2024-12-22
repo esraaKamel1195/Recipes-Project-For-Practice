@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthenticationsService } from '../services/authentications.service';
 import { IAuthResponseData } from '../shared/auth.response';
+import { AlertComponent } from '../alert/alert.component';
 
 @Component({
   selector: 'app-auth',
@@ -16,6 +17,7 @@ export class AuthComponent {
   error: any = null;
 
   constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
     private authenticationsService: AuthenticationsService,
     private router: Router
   ) {}
@@ -127,4 +129,14 @@ export class AuthComponent {
   //   //   },
   //   // });
   // }
+
+  onHandleError() {
+    this.error = null;
+  }
+
+  private showErrorAlert(message: string) {
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+    
+  }
 }
