@@ -1,10 +1,11 @@
-import { Component, ComponentFactoryResolver } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthenticationsService } from '../services/authentications.service';
 import { IAuthResponseData } from '../shared/auth.response';
 import { AlertComponent } from '../alert/alert.component';
+import { PlaceholderDirective } from '../directive/placeholder.directive';
 
 @Component({
   selector: 'app-auth',
@@ -15,9 +16,12 @@ export class AuthComponent {
   isLoggedInMode: boolean = false;
   isLoading: boolean = false;
   error: any = null;
+  @ViewChild(PlaceholderDirective, {static: false}) alertHost?: PlaceholderDirective;
+  @ViewChild('dynamicComponent', { read: ViewContainerRef }) dynamicComponent?: ViewContainerRef;
+  private closeSubscription?: Subscription;
 
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
+    // private componentFactoryResolver: ComponentFactoryResolver,
     private authenticationsService: AuthenticationsService,
     private router: Router
   ) {}
@@ -50,8 +54,8 @@ export class AuthComponent {
       },
       error: (errorMessage) => {
         this.error = errorMessage;
-        console.log(this.error);
         this.isLoading = false;
+        this.showErrorAlert(errorMessage);
       },
     });
   }
@@ -135,8 +139,31 @@ export class AuthComponent {
   }
 
   private showErrorAlert(message: string) {
+    // not correct way
+    // const alertComponent = new AlertComponent();
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
-    
+    // old version deprecated
+    // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+    // const hostViewContainerRef = this.alertHost?.viewContainerRef;
+    // hostViewContainerRef?.clear();
+
+    // const componentRef = hostViewContainerRef?.createComponent(componentFactory);
+    // if (componentRef?.instance.message) {
+    //   // componentRef?.instance.message = message;
+    // }
+
+    // this.closeSubscription = componentRef?.instance.close.subscribe(() => {
+    //   this.closeSubscription?.unsubscribe();
+    //   hostViewContainerRef?.clear();
+    // });
+
+    this.dynamicComponent?.clear();
+    const componentRef: any = this.dynamicComponent?.createComponent(AlertComponent);
+    componentRef.instance.message = message;
+
+    this.closeSubscription = componentRef?.instance.close.subscribe((data: never) => {
+      this.closeSubscription?.unsubscribe();
+      this.dynamicComponent?.clear();
+    });
   }
 }

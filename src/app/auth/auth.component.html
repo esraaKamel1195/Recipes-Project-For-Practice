@@ -1,18 +1,23 @@
+<!-- use directive -->
 <ng-template appPlaceholder></ng-template>
-<div class="row mt-3">
+
+<!-- use ng-container -->
+<ng-container #dynamicComponent></ng-container>
+
+<div class="row mt-3 form">
   <div class="col-xs-12 col-md-6 offset-3">
     <!-- <div class="alert alert-danger" *ngIf="error">
       <p>
         {{ this.error }}
       </p>
     </div> -->
-    <app-alert [message]="error" (close)="onHandleError()" *ngIf="error"></app-alert>
+    <!-- <app-alert *ngIf="error" [message]="error" (close)="onHandleError()"></app-alert> -->
 
     <div *ngIf="isLoading" class="col-md-4 offset-5">
       <app-loader-spinner></app-loader-spinner>
     </div>
     <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
-      <div class="form-group">
+      <div class="form-group flex">
         <label for="email">Email</label>
         <input
           type="email"
@@ -25,7 +30,7 @@
         />
       </div>
 
-      <div class="form-group mt-2">
+      <div class="form-group flex mt-2">
         <label for="password">Password</label>
         <input
           type="password"

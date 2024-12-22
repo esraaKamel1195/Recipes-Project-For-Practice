@@ -23,15 +23,6 @@
             >Recipes</a
           >
         </li>
-        <li class="nav-item" *ngIf="!isAuthenicated">
-          <a
-            class="nav-link text-light"
-            aria-current="page"
-            routerLink="/auth"
-            routerLinkActive="active"
-            >Authenticate</a
-          >
-        </li>
         <li class="nav-item" *ngIf="isAuthenicated">
           <a class="nav-link text-light" routerLink="/shopping-list"
             >Shopping List</a
@@ -56,13 +47,23 @@
             </li>
           </ul>
         </li>
-
-        <div class="justify-content-end" *ngIf="isAuthenicated">
-          <li class="nav-item">
-            <a class="nav-link text-light" (click)="onLogout()">Logout</a>
-          </li>
-        </div>
       </ul>
+      <div class="authenticate">
+        <a
+          class="nav-link text-light"
+          *ngIf="!isAuthenicated"
+          aria-current="page"
+          routerLink="/auth"
+          routerLinkActive="active"
+          >Authenticate</a
+        >
+        <a
+          class="nav-link text-light"
+          *ngIf="isAuthenicated"
+          (click)="onLogout()"
+          >Logout</a
+        >
+      </div>
     </div>
   </div>
 </nav>
